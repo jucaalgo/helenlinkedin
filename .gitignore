@@ -1,0 +1,9 @@
+node_modules
+dist
+.env
+.env.local
+.vercel
+*.log
+
+# Artefactos del proceso de desarrollo (HJC) — no parte de la app
+memory/
