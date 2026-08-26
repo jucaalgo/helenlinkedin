@@ -22,14 +22,15 @@ export function NewsRadar({ scanning, scanResult, onPickNews, selectedNews }) {
   const { entity, news, count, error } = scanResult || {};
 
   return (
-    <section className="glass-card rounded-2xl p-5 md:p-6">
-      <div className="mb-4 flex items-center gap-3">
-        <div className="grid h-9 w-9 place-items-center rounded-lg border border-emerald-400/20 bg-emerald-400/5 text-emerald-300">
+    <section className="glass-card rounded-2xl p-6 md:p-8 relative overflow-hidden group">
+      <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-emerald-500/5 blur-3xl group-hover:bg-emerald-500/10 transition-colors duration-700" />
+      <div className="mb-6 flex items-center gap-3 relative z-10">
+        <div className="grid h-10 w-10 place-items-center rounded-xl bg-emerald-500/10 text-emerald-400 shadow-[inset_0_0_15px_rgba(16,185,129,0.1)]">
           <Radar className="h-5 w-5" />
         </div>
         <div>
-          <h2 className="text-sm font-bold text-white">Radar de actualidad</h2>
-          <p className="text-xs text-zinc-500">Detección automática de empresa y noticias</p>
+          <h2 className="text-base font-bold text-white tracking-wide">Radar de Actualidad</h2>
+          <p className="text-xs text-zinc-400 font-medium">Detección automática de empresa y noticias clave</p>
         </div>
       </div>
 
@@ -98,21 +99,21 @@ export function NewsRadar({ scanning, scanResult, onPickNews, selectedNews }) {
                           onPickNews(isSelected ? '' : item.title);
                         }
                       }}
-                      className={`group flex w-full items-start gap-3 rounded-lg border p-3 text-left transition ${
+                      className={`group/item flex w-full items-start gap-4 rounded-xl border p-4 text-left transition-all duration-300 hover:-translate-y-1 ${
                         isSelected
-                          ? 'border-emerald-400/50 bg-emerald-400/10'
-                          : 'border-white/8 bg-white/[0.02] hover:border-emerald-400/30'
+                          ? 'border-emerald-500/50 bg-emerald-500/15 shadow-[0_5px_20px_rgba(16,185,129,0.15)]'
+                          : 'border-white/5 bg-black/20 hover:border-emerald-500/40 hover:bg-black/40 hover:shadow-lg'
                       }`}
                     >
                       <CheckCircle2
-                        className={`mt-0.5 h-4 w-4 shrink-0 ${
-                          isSelected ? 'text-emerald-400' : 'text-transparent group-hover:text-emerald-400/40'
+                        className={`mt-0.5 h-5 w-5 shrink-0 transition-colors ${
+                          isSelected ? 'text-emerald-400' : 'text-zinc-600 group-hover/item:text-emerald-500/50'
                         }`}
                       />
                       <div className="min-w-0 flex-1">
-                        <p className="text-sm leading-snug text-zinc-200">{item.title}</p>
-                        <p className="mt-1 text-xs text-zinc-500">
-                          {item.source} · {item.pubDate}
+                        <p className={`text-sm font-semibold leading-snug transition-colors ${isSelected ? 'text-emerald-100' : 'text-zinc-300 group-hover/item:text-zinc-100'}`}>{item.title}</p>
+                        <p className="mt-2 text-[11px] font-medium tracking-wide text-zinc-500 uppercase">
+                          {item.source} <span className="mx-1 opacity-50">•</span> {item.pubDate}
                         </p>
                       </div>
                       {safeLink && (

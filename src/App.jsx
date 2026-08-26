@@ -91,8 +91,8 @@ export default function App() {
   const canProceed = profileText.trim().length > 15;
 
   return (
-    <div className="min-h-screen bg-[#070a0c] text-zinc-100">
-      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.08),transparent_55%)]" />
+    <div className="min-h-screen bg-[#070a0c] text-zinc-100 selection:bg-emerald-500/30">
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-900/20 via-[#070a0c]/80 to-[#070a0c]" />
       <Header onHelp={() => setShowHelp(true)} onSettings={() => setShowSettings(true)} />
 
       <main className="mx-auto max-w-6xl px-4 pb-20 md:px-6">
@@ -156,20 +156,21 @@ export default function App() {
 
 function Hero() {
   return (
-    <section className="px-2 py-8 md:py-12">
-      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald-400/70">
-        Helen Yandy Reyes
-      </p>
-      <h1 className="mt-2 max-w-3xl text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl">
+    <section className="px-2 py-10 md:py-16 text-center animate-slide-up">
+      <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 mb-6">
+        <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse-glow"></span>
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-400">
+          Helen Yandy Reyes
+        </p>
+      </div>
+      <h1 className="mx-auto max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-white md:text-6xl lg:text-7xl">
         Prospección B2B con{' '}
-        <span className="bg-gradient-to-r from-emerald-300 to-teal-400 bg-clip-text text-transparent">
-          visión 360°
-        </span>{' '}
-        del ciclo automotriz y financiero
+        <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500 bg-clip-text text-transparent drop-shadow-sm">
+          Visión 360°
+        </span>
       </h1>
-      <p className="mt-4 max-w-2xl text-sm leading-relaxed text-zinc-400 md:text-base">
-        Detecta la empresa de cualquier perfil, ancla el mensaje en una noticia reciente y
-        redacta tres ángulos de contacto —de la escucha activa al cierre y la financiación—.
+      <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-zinc-400 md:text-lg">
+        Extrae la esencia de la concesión, encuentra su última noticia clave y genera mensajes de contacto con la autoridad del ciclo comercial y financiero.
       </p>
     </section>
   );

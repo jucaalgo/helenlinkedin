@@ -68,19 +68,17 @@ export function validateScanPayload(raw) {
 
 const EXTRACTION_PROMPT = `Eres un investigador de inteligencia comercial B2B para el sector automotriz y financiero en España.
 Analiza este perfil de LinkedIn e identifica:
-1. El NOMBRE DE LA EMPRESA, CONCESIONARIO, FINANCIERA, BANCO, EMPRESA DE RENTING, MARCA O IMPORTADOR actual o más relevante donde trabaja o con el que colabora.
+1. El NOMBRE DE LA EMPRESA MATRIZ (ej. Stellantis, Grupo Quadis, Santander Consumer Finance). Si es un concesionario local, extrae también el nombre del grupo al que pertenece si es evidente.
 2. El nombre de la persona.
 3. El sub-sector principal.
-4. Genera exactamente 2 consultas de búsqueda para Google News España 100% enfocadas en la EMPRESA y sus campañas, lanzamientos, resultados, acuerdos, expansión o premios recientes (no busques nombres de personas sueltos sin su empresa).
-
-Ejemplo de queries:
-- '"NombreEmpresa" (campaña OR lanzamiento OR acuerdo OR resultados OR expansión OR premio)'
-- '"NombreEmpresa" España'
+4. Genera exactamente 2 consultas de búsqueda hiper-quirúrgicas para Google News España.
+   - Query 1: Búsqueda del nombre exacto de la empresa. (Ej: "Grupo Quadis" OR "Santander Consumer")
+   - Query 2: Búsqueda de la empresa + términos de negocio clave (Ej: "NombreEmpresa" (rentabilidad OR adquisición OR ventas OR nombramiento OR expansión))
 
 Devuelve SOLO un JSON con esta estructura exacta:
 {
   "name": "Nombre de la persona",
-  "company": "Nombre exacto de la empresa / concesionario / financiera",
+  "company": "Nombre exacto de la empresa / grupo principal",
   "sector": "Concesionario / Financiera-Banca / Renting-Flotas / Marca-Importador / Otro",
   "queries": ["query 1", "query 2"]
 }`;
@@ -101,24 +99,24 @@ export function buildSystemPrompt({
   const toneBlock = buildToneBlock(tone);
   const newsSection = buildNewsSection(contextText, selectedNews);
 
-  return `Eres un copywriter de élite especializado en prospección B2B para el sector automotriz y financiero, y estratega senior de ventas y financiación. Escribes en nombre de ${identity || 'Helen Yandy Reyes, Financiera con casi 20 años de experiencia en el sector automotriz'}.
+  return `Eres un copywriter B2B experto, con un tono extremadamente humano, natural y cero "robótico". Escribes en nombre de ${identity || 'Helen Yandy Reyes'}.
 
-DIFERENCIAL DEL REMITENTE (entreteje esto con naturalidad, sin repetirlo literal ni presumir): ${advantage || 'Visión global de la operación: escucha activa para identificar la necesidad del cliente, cierre de venta y guía en financiación y productos adicionales. Domino el ciclo completo —comercial y financiero— en concesionarios, financieras, flotas y marcas.'}
+DIFERENCIAL DEL REMITENTE (Tu ADN, intégralo sutilmente): ${advantage || 'Soy profesional en Administración de Empresas y Finanzas y mi mayor valor es que conozco el sector automotriz desde todos sus ángulos. Llevo en esta industria ininterrumpidamente desde 2007. Empecé en pista vendiendo vehículos nuevos, pasé a liderar F&I, trabajé en banca comercializando financiación y ahora estoy en el negocio de V.O. Entiendo la presión comercial por cerrar, hablo el idioma técnico de las financieras para maximizar aprobaciones, y sé estructurar la operación para proteger la rentabilidad del concesionario.'}
 
 ${objectiveInstruction}
 
 ${toneBlock}
 ${newsSection}
-CRITERIOS DE EXCELENCIA DE REDACCIÓN:
-1. PROHIBICIÓN ABSOLUTA DE CLICHÉS: nunca uses "espero que te encuentres bien", "me pongo en contacto contigo", "hacer sinergia", "solución innovadora", "revolucionar", "en estos tiempos", "a la vanguardia", "dar el paso". Escribe con la voz de una financiera veterana con criterio de negocio, no de un comercial genérico.
-2. RIQUEZA LÉXICA DEL SECTOR: usa terminología precisa cuando aporte (financiación, cuota, TAE, scoring/riesgo, renting, productos adicionales: GAP, seguro, extensión de garantía; concesión, stock, margen, conversión, fidelización, ciclo comercial, escucha activa). Sin tecnicismo gratuito ni jerga hueca.
-3. ANÁLISIS ESTRATÉGICO PROFUNDO en "analisis_perfil": 3-5 frases que diagnostiquen el sector del contacto, su rol, un posible punto de dolor u oportunidad, el ángulo de entrada de Helen y cómo el gancho de actualidad (si lo hay) refuerza el mensaje. No lo redactes como relleno: que aporte juicio.
-4. DISTINCIÓN DE LAS 3 VARIANTES:
-   - Opción 1 (Financiación & Estructura de la Operación): enfatiza la mirada financiera —estructurar la operación óptima (cuota, TAE, riesgo, productos adicionales) que protege margen y fideliza al cliente final.
-   - Opción 2 (Visión Global del Ciclo Comercial): enfatiza el ciclo completo —escucha activa para identificar la necesidad real, cierre y acompañamiento en la decisión de financiación.
-   - Opción 3 (Consultivo / Sinergia de Negocio): aborda cuellos de botella operativos del concesionario, financiera, flota o marca y cómo la visión integral de Helen los resuelve.
-5. LONGITUD: Conexión ≤ 250 caracteres. Follow-up y Reunión entre 1.200 y 1.800 caracteres cada opción. Cuenta los caracteres antes de devolver y ajusta.
-6. GRAMÁTICA IMPECABLE: puntuación, transiciones fluidas entre párrafos, tono seguro y cercano, sin fórmulas gastadas ni frases hechas.
+CRITERIOS DE EXCELENCIA DE REDACCIÓN (ANTI-IA):
+1. PROHIBICIÓN ABSOLUTA DE CLICHÉS DE IA: Nunca uses "Espero que estés bien", "Me pongo en contacto", "Hacer sinergias", "Revolucionar", "Solución innovadora", "Me encantaría hablar contigo sobre", "En resumen", "Por lo tanto", "Dicho esto".
+2. ASIMETRÍA CONVERSACIONAL: Los mensajes humanos no son perfectamente simétricos. No uses listas estructuradas con viñetas a menos que sea estrictamente necesario. Usa un tono directo, como si escribieras por WhatsApp o Slack a un colega del sector.
+3. ANÁLISIS ESTRATÉGICO PROFUNDO ("analisis_perfil"): Haz un diagnóstico agudo (3-5 frases) del momento de su empresa o sector. Cruza su cargo con los "dolores" que Helen conoce de primera mano (presión por penetración de marca, caída del margen en V.N., atascos en riesgo/aprobaciones, captación de V.O.). Infiere retos, no resumas su CV.
+4. ESTRUCTURA DE LAS 3 VARIANTES (Aplica tu ADN):
+   - Opción 1 (Ángulo Rentabilidad de la Operación): Dirigido a Gerencia. Cómo estructurar bien (cuota, TAE, productos adicionales) salva el margen bruto del coche, especialmente ahora.
+   - Opción 2 (Ángulo de Pista/Comercial): Dirigido a Jefes de Ventas. Empatía de "trinchera". Cómo tu experiencia vendiendo en pista te permite destrabar operaciones que el comercial da por perdidas por falta de financiación.
+   - Opción 3 (Ángulo Financiera/Aprobación): Dirigido a F&I/Riesgo. Cómo hablas el idioma del analista de riesgos para maximizar la tasa de aprobación de las financiaciones enviadas.
+5. LONGITUD RESTRINGIDA: Conexión MÁXIMO 2 oraciones (muy breve). Follow-up/Reunión: no más de 3 párrafos cortos (ve directo al grano, el B2B no lee sábanas de texto).
+6. GRAMÁTICA HUMANA: Transiciones fluidas, tuteo respetuoso pero de igual a igual (colegas veteranos del sector).`;
 
 Formato de salida: JSON estricto con esta estructura:
 {
@@ -131,35 +129,33 @@ Formato de salida: JSON estricto con esta estructura:
 
 function buildObjectiveInstruction(objective) {
   if (objective === 'conexion') {
-    return `OBJETIVO: SOLICITUD DE CONEXIÓN INICIAL (nota en invitación de LinkedIn).
-REGLA ESTRICTA DE LONGITUD: máximo 250 caracteres. LinkedIn impone un límite físico infranqueable de 300; pedir 250 deja margen de seguridad. Cuenta los caracteres de cada opción ANTES de devolver y, si supera 250, recorta preservando una sola idea nítida. Una nota de conexión no es un párrafo: es un guiño profesional breve.
-CONTENIDO: un elogio o referencia concreta y específica a su trabajo, equipo, concesión, campaña o una noticia reciente de su compañía. CERO intención de venta: solo conectar por afinidad profesional y visión compartida del negocio automotriz y financiero.`;
+    return `OBJETIVO: NOTA DE CONEXIÓN DE LINKEDIN.
+REGLA DE ORO: NO VENDER. NADA DE PITCH.
+LONGITUD: Máximo 2 oraciones. Que parezca escrito en 10 segundos desde el móvil.
+CONTENIDO: Ve directo a por qué le agregas. Menciona un reto de su puesto, una noticia o su experiencia. Usa un tono casual pero del sector. Ejemplo de estructura: "Hola [Nombre], he visto el ritmo de [Empresa/Concesión] este año y la verdad tiene mérito con cómo está el mercado de V.O. Seguimos en contacto por aquí."`;
   }
 
   if (objective === 'followup') {
-    return `OBJETIVO: MENSAJE TRAS ACEPTAR CONEXIÓN (follow-up de alto impacto).
-REGLA OBLIGATORIA DE EXTENSIÓN: entre 1.200 y 1.800 caracteres (aprox. 200-300 palabras). Mensaje completo, elocuente y exhaustivo, no telegráfico.
-ESTRUCTURA OBLIGATORIA EN PÁRRAFOS:
-1. APERTURA Y GANCHO CONTEXTUAL: agradecimiento cálido por conectar. Análisis profundo de su trayectoria, concesión, campaña o hito reciente de su compañía (usando la noticia/contexto). Demuestra que conoces su lenguaje de negocio.
-2. EL DIFERENCIAL DE HELEN — VISIÓN GLOBAL DE LA OPERACIÓN: explica con autoridad cómo tus casi 20 años entre ventas de vehículos, departamento de negocios (Financiera) y banca te dan una visión de 360°: desde la escucha activa que identifica la necesidad real del cliente hasta el cierre y el acompañamiento en la decisión de financiación y productos adicionales.
-3. DOMINIO TÉCNICO FINANCIERO: menciona la estructuración de la operación (cuota, TAE, scoring/riesgo, renting, productos adicionales como GAP, seguro y extensión de garantía) y cómo eso protege margen y fideliza, sin necesidad de micromanagement.
-4. CIERRE ELEGANTE Y DE BAJA FRICCIÓN: propuesta abierta para estar en su radar cuando necesiten una mirada que una el comercial y el financiero, invitando a conversar o conocer tu trayectoria.`;
+    return `OBJETIVO: SEGUIMIENTO TRAS CONECTAR.
+ESTRUCTURA: Mensaje de 3 párrafos cortos y contundentes.
+1. Apertura observacional: Usa la noticia provista o un hecho de su perfil para abrir. Nada de "Gracias por conectar". Ej: "He estado siguiendo la expansión de [Empresa]..."
+2. Tu Perspectiva (ADN Helen): Conecta su situación con tu visión de 360 grados (desde la pista de ventas hasta el scoring del banco). Menciona cómo entender ambos mundos destraba la rentabilidad.
+3. Pregunta Abierta (Baja fricción): Termina con una pregunta natural sobre cómo están manejando un reto específico (ej: penetración de financiación, márgenes en V.O.), invitando a una charla sin compromiso de agenda.`;
   }
 
-  return `OBJETIVO: PROPUESTA COMERCIAL Y SOLICITUD DE REUNIÓN DIRECTA.
-REGLA OBLIGATORIA DE EXTENSIÓN: entre 1.200 y 1.800 caracteres. Mensaje sólido, estructurado y de alta persuasión B2B.
+  return `OBJETIVO: MENSAJE DIRECTO DE ACERCAMIENTO B2B.
 ESTRUCTURA:
-1. Gancho de alto impacto sobre su operación (concesión, red, financiación, flota o marca).
-2. Demostración de valor: por qué una financiera con visión global del ciclo comercial resuelve cuellos de botella (conversión, margen, fidelización, estructuración de la operación).
-3. Propuesta clara de sinergia para su próximo cierre, campaña o reestructuración de financiación.
-4. Llamado a la acción directo para una breve videollamada o café esta semana.`;
+1. Observación Directa: Algo sobre su operación, marca o concesión que te haya llamado la atención.
+2. Identificación del Problema: Menciona un reto clásico que tú resuelves (ej. operaciones que se caen en la financiera, comerciales frustrados, márgenes de V.O. apretados).
+3. Cómo ayudas: Usa tu trayectoria ininterrumpida desde 2007 (ventas, F&I, banca) para demostrar que puedes estructurar operaciones blindando el margen.
+4. Call to Action Suave: "¿Te hace sentido que hablemos 10 mins esta semana para intercambiar perspectivas de cómo viene el Q4?"`;
 }
 
 function buildToneBlock(tone) {
   const map = {
-    ejecutivo: 'Formal, directo, lenguaje de negocio y financiero. Frases medidas, autoridad sin solemnidad.',
-    consultivo: 'Asesor, cercano, orientado al diagnóstico y al valor compartido. Genera confianza escuchando antes de proponer.',
-    cercano: 'Cálido y conversacional, profesional pero de colega veterana del sector.',
+    ejecutivo: 'Directo, con mentalidad de negocio y métricas (margen, conversión, riesgo). Suena profesional pero muy terrenal.',
+    consultivo: 'De colega a colega. Empático con los problemas del día a día del concesionario o financiera.',
+    cercano: 'Conversacional y relajado. Usa el lenguaje propio de los que han "pisado mucha pista" de ventas.',
   };
   const label = tone || 'consultivo';
   return `TONO: ${label}. ${map[label] || map.consultivo}`;
@@ -329,9 +325,10 @@ export async function scanNews(profileText, key) {
   // El nombre de la empresa como término suelto rinde más y mejores noticias.
   if (entity.company && entity.company.trim().length > 2) {
     const clean = entity.company.replace(/[^\w\sÀ-ſ]/gi, '').trim();
+    // Prioridad: 1. Empresa matriz/grupo 2. Sector automotor genérico si no hay de la empresa
     queries = [
-      `${clean} (coche OR financiera OR renting OR campaña OR acuerdo OR resultados OR expansión)`,
-      `${clean} España`,
+      `${clean} (concesionario OR motor OR coches OR resultados OR expansión OR renting OR automoción)`,
+      `Sector Automoción España (vehículos de ocasión OR renting OR financiación OR ventas)`,
     ];
   } else if (queries.length === 0) {
     const firstLine =
