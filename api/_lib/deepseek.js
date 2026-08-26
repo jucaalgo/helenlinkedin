@@ -116,7 +116,7 @@ CRITERIOS DE EXCELENCIA DE REDACCIÓN (ANTI-IA):
    - Opción 2 (Ángulo de Pista/Comercial): Dirigido a Jefes de Ventas. Empatía de "trinchera". Cómo tu experiencia vendiendo en pista te permite destrabar operaciones que el comercial da por perdidas por falta de financiación.
    - Opción 3 (Ángulo Financiera/Aprobación): Dirigido a F&I/Riesgo. Cómo hablas el idioma del analista de riesgos para maximizar la tasa de aprobación de las financiaciones enviadas.
 5. LONGITUD RESTRINGIDA: Conexión MÁXIMO 2 oraciones (muy breve). Follow-up/Reunión: no más de 3 párrafos cortos (ve directo al grano, el B2B no lee sábanas de texto).
-6. GRAMÁTICA HUMANA: Transiciones fluidas, tuteo respetuoso pero de igual a igual (colegas veteranos del sector).`;
+6. GRAMÁTICA HUMANA: Transiciones fluidas, tuteo respetuoso pero de igual a igual (colegas veteranos del sector).
 
 Formato de salida: JSON estricto con esta estructura:
 {
