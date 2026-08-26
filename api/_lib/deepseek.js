@@ -115,8 +115,9 @@ CRITERIOS DE EXCELENCIA DE REDACCIÓN (ANTI-IA):
    - Opción 1 (Ángulo Rentabilidad de la Operación): Dirigido a Gerencia. Cómo estructurar bien (cuota, TAE, productos adicionales) salva el margen bruto del coche, especialmente ahora.
    - Opción 2 (Ángulo de Pista/Comercial): Dirigido a Jefes de Ventas. Empatía de "trinchera". Cómo tu experiencia vendiendo en pista te permite destrabar operaciones que el comercial da por perdidas por falta de financiación.
    - Opción 3 (Ángulo Financiera/Aprobación): Dirigido a F&I/Riesgo. Cómo hablas el idioma del analista de riesgos para maximizar la tasa de aprobación de las financiaciones enviadas.
-5. LONGITUD RESTRINGIDA: Conexión MÁXIMO 2 oraciones (muy breve). Follow-up/Reunión: no más de 3 párrafos cortos (ve directo al grano, el B2B no lee sábanas de texto).
+5. LONGITUD RESTRINGIDA: Conexión MÁXIMO 2-3 oraciones (muy breve). Follow-up/Reunión: no más de 3 párrafos cortos (ve directo al grano, el B2B no lee sábanas de texto).
 6. GRAMÁTICA HUMANA: Transiciones fluidas, tuteo respetuoso pero de igual a igual (colegas veteranos del sector).
+7. ENFOQUE DE BÚSQUEDA DE EMPLEO (OBLIGATORIO): En el mensaje debes dejar caer sutilmente que estás explorando nuevos retos profesionales. No suenes como que "pides trabajo", sino que ofreces valor. Conecta tu background 360° (ventas, F&I, banco) con por qué serías la pieza perfecta para resolver los problemas actuales de *su* empresa o aportar a su crecimiento.
 
 Formato de salida: JSON estricto con esta estructura:
 {
@@ -130,25 +131,25 @@ Formato de salida: JSON estricto con esta estructura:
 function buildObjectiveInstruction(objective) {
   if (objective === 'conexion') {
     return `OBJETIVO: NOTA DE CONEXIÓN DE LINKEDIN.
-REGLA DE ORO: NO VENDER. NADA DE PITCH.
-LONGITUD: Máximo 2 oraciones. Que parezca escrito en 10 segundos desde el móvil.
-CONTENIDO: Ve directo a por qué le agregas. Menciona un reto de su puesto, una noticia o su experiencia. Usa un tono casual pero del sector. Ejemplo de estructura: "Hola [Nombre], he visto el ritmo de [Empresa/Concesión] este año y la verdad tiene mérito con cómo está el mercado de V.O. Seguimos en contacto por aquí."`;
+REGLA DE ORO: Tono natural y directo.
+LONGITUD: Máximo 2-3 oraciones. Que parezca escrito en 10 segundos desde el móvil.
+CONTENIDO: Ve directo a por qué le agregas. Menciona un reto de su puesto o empresa, y deja caer sutilmente que estás explorando oportunidades y que tu experiencia encaja con ellos. Ejemplo de estructura: "Hola [Nombre], he visto el ritmo de [Empresa] y tiene mucho mérito. Estoy explorando nuevos retos tras años en F&I/Banca y creo que mi perfil 360° podría aportar mucho a vuestra rentabilidad de V.O. Seguimos en contacto."`;
   }
 
   if (objective === 'followup') {
     return `OBJETIVO: SEGUIMIENTO TRAS CONECTAR.
 ESTRUCTURA: Mensaje de 3 párrafos cortos y contundentes.
-1. Apertura observacional: Usa la noticia provista o un hecho de su perfil para abrir. Nada de "Gracias por conectar". Ej: "He estado siguiendo la expansión de [Empresa]..."
-2. Tu Perspectiva (ADN Helen): Conecta su situación con tu visión de 360 grados (desde la pista de ventas hasta el scoring del banco). Menciona cómo entender ambos mundos destraba la rentabilidad.
-3. Pregunta Abierta (Baja fricción): Termina con una pregunta natural sobre cómo están manejando un reto específico (ej: penetración de financiación, márgenes en V.O.), invitando a una charla sin compromiso de agenda.`;
+1. Apertura observacional: Usa la noticia provista o un hecho de su perfil para abrir.
+2. Propuesta de Valor Estratégica (Búsqueda de Empleo): Comenta que estás en búsqueda activa de nuevos proyectos. Conecta su situación actual con tu visión de 360 grados (desde la pista de ventas hasta el scoring del banco) y cómo incorporar un perfil como el tuyo destraba su rentabilidad comercial o financiera.
+3. Llamada a la acción (Baja fricción): Termina invitando a una charla corta y distendida para explorar si habría encaje en su equipo a futuro.`;
   }
 
-  return `OBJETIVO: MENSAJE DIRECTO DE ACERCAMIENTO B2B.
+  return `OBJETIVO: MENSAJE DIRECTO DE ACERCAMIENTO B2B (NETWORKING / EMPLEO).
 ESTRUCTURA:
-1. Observación Directa: Algo sobre su operación, marca o concesión que te haya llamado la atención.
-2. Identificación del Problema: Menciona un reto clásico que tú resuelves (ej. operaciones que se caen en la financiera, comerciales frustrados, márgenes de V.O. apretados).
-3. Cómo ayudas: Usa tu trayectoria ininterrumpida desde 2007 (ventas, F&I, banca) para demostrar que puedes estructurar operaciones blindando el margen.
-4. Call to Action Suave: "¿Te hace sentido que hablemos 10 mins esta semana para intercambiar perspectivas de cómo viene el Q4?"`;
+1. Observación Directa: Algo sobre su operación, marca o concesión que te haya llamado la atención (usa las noticias o el sector).
+2. Identificación del Problema + Encaje: Menciona un reto clásico que tú resuelves (ej. operaciones que se caen, márgenes apretados).
+3. Tu Propuesta de Valor (Búsqueda de Empleo): Menciona claramente que estás explorando tu próximo paso profesional y que tu trayectoria ininterrumpida desde 2007 te permite aportar valor inmediato en su estructura.
+4. Call to Action Suave: "¿Te encajaría que hablemos 10 mins esta semana para ver si mi perfil 360° podría sumar a vuestros objetivos de este año?"`;
 }
 
 function buildToneBlock(tone) {
